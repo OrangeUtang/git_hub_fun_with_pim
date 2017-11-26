@@ -16,6 +16,7 @@ public class SmartAR
 		expectedDataCount = numbrData;
 		this.keyLength = keylength;
 		setThreshold(thresh);
+		dataCount = 0;
 		
 		if(thresh > numbrData)
 		{
