@@ -16,6 +16,7 @@ public class SmartAR
 		expectedDataCount = numbrData;
 		this.keyLength = keylength;
 		setThreshold(thresh);
+		
 		dataCount = 0;
 		
 		if(thresh > numbrData)
@@ -28,6 +29,7 @@ public class SmartAR
 			dataStructure = new HashDataStruct(keylength, numbrData);
 		}
 		
+		setKeyLength(keylength);
 		
 	}
 	
@@ -72,7 +74,7 @@ public class SmartAR
 		for(int i = 0; i<n; i++)
 		{
 			int lenghtCounter = 0;
-			String genKey = "";
+			String genKey = new String("");
 			
 			
 			//creating a random alpha-numerical String
@@ -80,8 +82,8 @@ public class SmartAR
 			{
 				String possibleChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 				int charLocation = (int)(Math.random() * possibleChars.length());
-				String charAt = possibleChars.substring(charLocation, charLocation);
-				genKey.concat(charAt);
+				String charAt = new String(possibleChars.substring(charLocation, charLocation+1));
+				genKey = genKey + charAt;
 				lenghtCounter++;
 			}
 			

@@ -126,15 +126,24 @@ public class HashDataStruct extends dataStruct
 		
 		Set<String> hashKeySet = hashStruct.keySet();
 		
+		boolean found = false;
 		for(String value : hashKeySet)
 		{
+			
+			if(found)
+			{
+				return hashStruct.get(value).getValue();
+			}
+			
+			
             if(hashStruct.get(value).equals(key))
             {
-            	return();
+            	found = true;
             }
             
         }
 		
+		return "Not found /n";
 		
 	}
 
