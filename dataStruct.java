@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Stack;
 
 public abstract class dataStruct 
@@ -16,7 +15,7 @@ public abstract class dataStruct
 		keylength = x;
 	} 
 	
-	public abstract ArrayList<?> allKeys();
+	public abstract void allKeys();
 	
 	public abstract void add(String key, String value);
 	
@@ -28,6 +27,6 @@ public abstract class dataStruct
 	
 	public abstract String prevKey(String key);
 	
-	public abstract Stack<DataNode> previousCar(String key);
+	public abstract Stack<String> previousCar(String key);
 	
 }

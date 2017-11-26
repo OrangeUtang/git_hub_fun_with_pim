@@ -1,4 +1,6 @@
+import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Set;
 import java.util.Stack;
 
 public class HashDataStruct extends dataStruct 
@@ -90,6 +92,7 @@ public class HashDataStruct extends dataStruct
 			
 			else
 			{
+				//
 				DataNode availableNode = new DataNode(key, "_");
 				hashStruct.get(key).setSuccessorOwner(availableNode);
 				availableNode.setPreviousOwner(hashStruct.get(key));
@@ -110,14 +113,29 @@ public class HashDataStruct extends dataStruct
 		if(hashStruct.containsKey(key) && !hashStruct.get(key).getValue().equals("_"))	
 			return hashStruct.get(key).getValue();
 		
-		return "There are either no entries associated with that key, or it is currently not holding any Value";
+		return "_";
 	}
 
 	@Override
 	public String nextKey(String key) 
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Enumeration<DataNode> elementEnum = hashStruct.elements();
+		
+		//while
+		//DataNode temp = elementEnum.
+		
+		Set<String> hashKeySet = hashStruct.keySet();
+		
+		for(String value : hashKeySet)
+		{
+            if(hashStruct.get(value).equals(key))
+            {
+            	return();
+            }
+            
+        }
+		
+		
 	}
 
 	@Override
@@ -128,9 +146,9 @@ public class HashDataStruct extends dataStruct
 	}
 
 	@Override
-	public Stack<DataNode> previousCar(String key) 
+	public Stack<String> previousCar(String key) 
 	{
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
