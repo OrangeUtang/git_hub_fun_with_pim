@@ -14,11 +14,6 @@ public class DataNode
 	DataNode SuccessorOwner;
 	
 	
-	DataNode next;
-	DataNode previous;
-	
-	
-	
 	DataNode(String key, String value)
 	{
 		this.key = key;
@@ -70,24 +65,7 @@ public class DataNode
 	}
 
 
-	public DataNode getNext() {
-		return next;
-	}
-
-
-	public void setNext(DataNode next) {
-		this.next = next;
-	}
-
-
-	public DataNode getPrevious() {
-		return previous;
-	}
-
-
-	public void setPrevious(DataNode previous) {
-		this.previous = previous;
-	}
+	
 	
 	public boolean isValidEmplacement() {
 		return validEmplacement;

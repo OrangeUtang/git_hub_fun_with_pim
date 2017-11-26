@@ -19,8 +19,6 @@ public class SmartAR
 		
 	}
 	
-
-	
 	public void setThreshold(long thres)
 	{
 		//must check if threshold is an acceptable value.
@@ -56,6 +54,7 @@ public class SmartAR
 	{
 		boolean previouslyCreated = false;
 		String[] generatedKey = new String[n];
+		int successfulGeneration = 0;
 		
 		//for n entries
 		for(int i = 0; i<n; i++)
@@ -75,7 +74,7 @@ public class SmartAR
 			}
 			
 			//look in the generated key array for existing occurrence of the Key
-			for(int j = 0; j< n; j++)
+			for(int j = 0; j< successfulGeneration; j++)
 			{
 				if(generatedKey[j].equals(genKey))
 				{
@@ -87,6 +86,7 @@ public class SmartAR
 			if(dataStructure.getValues(genKey).equals("_") && !previouslyCreated)
 			{
 				generatedKey[i] = genKey;
+				successfulGeneration++;
 			}
 			
 			//if it is we will have to generate a new key.
@@ -186,19 +186,23 @@ public class SmartAR
 	
 	
 	//mutators and accessors
-	public dataStruct getDataStructure() {
+	public dataStruct getDataStructure() 
+	
+	{
 		return dataStructure;
 	}
 
 
 
-	public void setDataStructure(dataStruct dataStructure) {
+	public void setDataStructure(dataStruct dataStructure) 
+	{
 		this.dataStructure = dataStructure;
 	}
 
 
 
-	public int getKeyLength() {
+	public int getKeyLength() 
+	{
 		return keyLength;
 	}
 
@@ -238,20 +242,26 @@ public class SmartAR
 
 
 
-	public long getDataCount() {
+	public long getDataCount() 
+	{
 		return dataCount;
+		
 	}
 
 
 
-	public void setDataCount(int dataCount) {
+	public void setDataCount(int dataCount) 
+	{
 		this.dataCount = dataCount;
+		
 	}
 
 
 
-	public long getThreshold() {
+	public long getThreshold() 
+	{
 		return threshold;
+		
 	}
 	
 	

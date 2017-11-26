@@ -27,6 +27,6 @@ public abstract class dataStruct
 	
 	public abstract String prevKey(String key);
 	
-	public abstract Stack<DataNode> previousCar(String key);
+	public abstract Stack<String> previousCar(String key);
 	
 }
