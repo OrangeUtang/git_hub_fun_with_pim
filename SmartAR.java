@@ -11,10 +11,21 @@ public class SmartAR
 	private long dataCount;
 	
 	
-	SmartAR(int keylength, int numbrData)
+	SmartAR(int keylength, int numbrData, int thresh)
 	{
 		expectedDataCount = numbrData;
-		this.keyLength = keylength; 
+		this.keyLength = keylength;
+		setThreshold(thresh);
+		
+		if(thresh > numbrData)
+		{
+			dataStructure = new SequenceDataStruct(keylength, numbrData);
+		}
+		
+		else
+		{
+			dataStructure = new HashDataStruct(keylength, numbrData);
+		}
 		
 		
 	}
