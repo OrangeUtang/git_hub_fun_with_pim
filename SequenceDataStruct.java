@@ -36,12 +36,30 @@ public class SequenceDataStruct extends dataStruct
 	}
 	
 	@Override
-	public void allKeys() 
+	public ArrayList<DataNode> allKeys() 
 	{
-		// TODO
-		
-	}
-	
+		// loop over characters starting at last one for lexicographic order
+		for (int k = keylenght-1; k > 0; k--) {
+			
+			// loop over Array
+			for (int i = 0; i < sequenceArray.size(); i++) {
+				char[] keyI = sequenceArray.get(i).getKey().toCharArray();	
+				
+				// loop over Array again to compare
+				for (int j = i+1; j < sequenceArray.size(); j++) {
+					char[] keyJ = sequenceArray.get(j).getKey().toCharArray();
+					
+					if (keyI[k] > keyJ[k]) {
+						DataNode dnI = sequenceArray.get(i);
+						DataNode dnJ = sequenceArray.get(j);
+						sequenceArray.set(i, dnJ);
+						sequenceArray.set(j, dnI);
+					}
+				}
+			}	
+		}	
+		return sequenceArray;
+	}	
 	
 	@Override
 	public void add(String key, String value) 
