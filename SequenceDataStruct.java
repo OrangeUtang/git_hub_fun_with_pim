@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
@@ -45,11 +46,30 @@ public class SequenceDataStruct extends dataStruct
 	}
 	
 	@Override
-	public void allKeys() 
-	{
-		// TODO
+	public ArrayList<DataNode> allKeys() {
 		
-	}
+		// loop over characters from end to begin
+		for (int k = keylenght; k > 0; k--) {
+			
+			// loop over Array
+			for (int i = 0; i < sequenceArray.size(); i++) {
+				char[] keyI = sequenceArray.get(i).getKey().toCharArray();
+				
+				// loop over Array again to compare
+				for (int j = 0; j < sequenceArray.size(); j++) {
+					char[] keyJ = sequenceArray.get(j).getKey().toCharArray();
+					
+					if (keyI[k] < keyJ[k]) {
+						DataNode dnI = sequenceArray.get(i);
+						DataNode dnJ = sequenceArray.get(j);
+						sequenceArray.set(i, dnJ);
+						sequenceArray.set(j, dnI);
+					}
+				}
+			}
+		}		
+		return sequenceArray;
+	}	
 	
 	
 	@Override

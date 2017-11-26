@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Stack;
 
 public abstract class dataStruct 
@@ -15,7 +16,7 @@ public abstract class dataStruct
 		keylength = x;
 	} 
 	
-	public abstract void allKeys();
+	public abstract ArrayList<?> allKeys();
 	
 	public abstract void add(String key, String value);
 	

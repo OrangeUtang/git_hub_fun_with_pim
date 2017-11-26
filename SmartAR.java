@@ -56,6 +56,7 @@ public class SmartAR
 	{
 		boolean previouslyCreated = false;
 		String[] generatedKey = new String[n];
+		int successfullGeneration = 0;
 		
 		//for n entries
 		for(int i = 0; i<n; i++)
@@ -75,7 +76,7 @@ public class SmartAR
 			}
 			
 			//look in the generated key array for existing occurrence of the Key
-			for(int j = 0; j< n; j++)
+			for(int j = 0; j < successfullGeneration; j++)
 			{
 				if(generatedKey[j].equals(genKey))
 				{
@@ -87,6 +88,7 @@ public class SmartAR
 			if(dataStructure.getValues(genKey).equals("_") && !previouslyCreated)
 			{
 				generatedKey[i] = genKey;
+				successfullGeneration++;
 			}
 			
 			//if it is we will have to generate a new key.
