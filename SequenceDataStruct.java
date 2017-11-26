@@ -56,10 +56,11 @@ public class SequenceDataStruct extends dataStruct
 				char[] keyI = sequenceArray.get(i).getKey().toCharArray();
 				
 				// loop over Array again to compare
-				for (int j = 0; j < sequenceArray.size(); j++) {
+				for (int j = i+1; j < sequenceArray.size(); j++) {
 					char[] keyJ = sequenceArray.get(j).getKey().toCharArray();
 					
-					if (keyI[k] < keyJ[k]) {
+					// if the one in an earlier 
+					if (keyI[k] > keyJ[k]) {
 						DataNode dnI = sequenceArray.get(i);
 						DataNode dnJ = sequenceArray.get(j);
 						sequenceArray.set(i, dnJ);
@@ -67,9 +68,9 @@ public class SequenceDataStruct extends dataStruct
 					}
 				}
 			}
-		}		
+		}
 		return sequenceArray;
-	}	
+	}
 	
 	
 	@Override
