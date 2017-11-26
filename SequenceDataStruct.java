@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
@@ -7,7 +6,6 @@ public class SequenceDataStruct extends dataStruct
 {
 	private int keylenght;
 	private DataNode nullNode;
-	private int entryLocation;
 	private int expectedEntries;
 	private ArrayList<DataNode> sequenceArray;
 	
@@ -20,14 +18,6 @@ public class SequenceDataStruct extends dataStruct
 		nullNode.setKey("_");
 		nullNode.setValue("_");
 		nullNode.setValidEmplacement(true);
-		
-		//setting all element to the placeHolder Node
-		for(int i = 0; i < expectedEntries ; i++)
-		{
-			sequenceArray.set(i, nullNode);
-		}
-		
-		entryLocation = 0;
 		
 	}
 	
@@ -46,30 +36,10 @@ public class SequenceDataStruct extends dataStruct
 	}
 	
 	@Override
-	public ArrayList<DataNode> allKeys() {
+	public void allKeys() 
+	{
+		// TODO
 		
-		// loop over characters from end to begin
-		for (int k = keylenght; k > 0; k--) {
-			
-			// loop over Array
-			for (int i = 0; i < sequenceArray.size(); i++) {
-				char[] keyI = sequenceArray.get(i).getKey().toCharArray();
-				
-				// loop over Array again to compare
-				for (int j = i+1; j < sequenceArray.size(); j++) {
-					char[] keyJ = sequenceArray.get(j).getKey().toCharArray();
-					
-					// if the one in an earlier 
-					if (keyI[k] > keyJ[k]) {
-						DataNode dnI = sequenceArray.get(i);
-						DataNode dnJ = sequenceArray.get(j);
-						sequenceArray.set(i, dnJ);
-						sequenceArray.set(j, dnI);
-					}
-				}
-			}
-		}
-		return sequenceArray;
 	}
 	
 	
@@ -81,7 +51,7 @@ public class SequenceDataStruct extends dataStruct
 		
 		
 		//look through the array
-		while( i < entryLocation)
+		while( i < sequenceArray.size())
 		{
 			//if it finds the key and the value associated with the key is _
 			if( sequenceArray.get(i).getValue().equals("_") && sequenceArray.get(i).getKey().equals(key))
@@ -91,10 +61,13 @@ public class SequenceDataStruct extends dataStruct
 			return;
 		}
 		
+		//create new data node with desired key and value
+		//set previous successor pointer to null Node.
+		//add the new entry to the array list
+		DataNode newEntries = new DataNode(key,value);
+		newEntries.setSuccessorOwner(nullNode);
+		sequenceArray.add(newEntries);
 		
-		//entry location is where new data will be imputed if the key does not already exists
-		sequenceArray.set(entryLocation, new DataNode(key,value));
-		entryLocation++;
 	}
 	
 	
@@ -103,7 +76,7 @@ public class SequenceDataStruct extends dataStruct
 	{
 		int i = 0;
 				
-		while( i < expectedEntries)
+		while( i < sequenceArray.size())
 		{
 			//if the data node entries at position i key value is equal to the searched key
 			if(sequenceArray.get(i).getKey().equals(key))
@@ -118,8 +91,7 @@ public class SequenceDataStruct extends dataStruct
 			}
 		}
 		
-		System.out.println("");
-		
+		System.out.println("No value associated with that key at the moment");
 	}
 	
 	
@@ -128,17 +100,19 @@ public class SequenceDataStruct extends dataStruct
 	{
 		int i = 0;
 		String value = "";
-		while( i < expectedEntries)
+		
+		while( i < sequenceArray.size())
 		{
 			//if the data node entries at position i key value is equal to the searched key
 			if(sequenceArray.get(i).getKey().equals(key))
 			{
 				value.concat(sequenceArray.get(i).getValue());
+				return value;
 			}
 		
 		}
 		
-		return value;
+		return "_";
 	}
 	
 	
@@ -188,9 +162,9 @@ public class SequenceDataStruct extends dataStruct
 		return sequenceArray.get(i+1).getKey();
 	}
 	
-	public Stack<DataNode> previousCar(String key)
+	public Stack<String> previousCar(String key)
 	{
-		Stack<DataNode> previousValues = new Stack<DataNode>();
+		Stack<String> previousValues = new Stack<String>();
 		int i = 0;
 		while( i < expectedEntries)
 		{
@@ -199,17 +173,14 @@ public class SequenceDataStruct extends dataStruct
 			{
 				
 				DataNode tempNode = sequenceArray.get(i);
-				previousValues.push(tempNode);
+				previousValues.push(tempNode.getValue());
 				
 				while(!sequenceArray.get(i).getKey().equals("_"))
 				{
-					tempNode = tempNode.getNext();
-					previousValues.push(tempNode);
-					
+					tempNode = tempNode.getPreviousOwner();
+					previousValues.push(tempNode.getValue());
 				}
 			}
-			
-			
 		}
 		
 		
