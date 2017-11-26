@@ -15,8 +15,7 @@ public class SequenceDataStruct extends dataStruct
 		this.keylenght = keylength;
 		
 		//setting up the place holder node
-		nullNode.setKey("_");
-		nullNode.setValue("_");
+		nullNode = new DataNode("_","_");
 		nullNode.setValidEmplacement(true);
 		
 	}
