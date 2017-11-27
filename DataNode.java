@@ -6,7 +6,7 @@ public class DataNode
 	
 	private String key;
 	private String value;
-	private boolean validEmplacement;
+	
 	
 
 
@@ -63,20 +63,14 @@ public class DataNode
 	public void setSuccessorOwner(DataNode successorOwner) {
 		SuccessorOwner = successorOwner;
 	}
-
-
 	
-	
-	public boolean isValidEmplacement() {
-		return validEmplacement;
+	public boolean hasPreviousOwner()
+	{
+		if(previousOwner == null)
+		{
+			return false;
+		}
+		return true;
 	}
-
-
-
-	public void setValidEmplacement(boolean validEmplacement) {
-		this.validEmplacement = validEmplacement;
-	}
-	
-	
 	
 }

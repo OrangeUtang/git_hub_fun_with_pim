@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+
+
 public class SequenceDataStruct extends dataStruct
 {
 	private int keylenght;
@@ -16,7 +18,7 @@ public class SequenceDataStruct extends dataStruct
 		
 		//setting up the place holder node
 		nullNode = new DataNode("_","_");
-		nullNode.setValidEmplacement(true);
+		
 		
 	}
 	
@@ -38,14 +40,14 @@ public class SequenceDataStruct extends dataStruct
 	public ArrayList<DataNode> allKeys() 
 	{
 		// loop over characters starting at last one for lexicographic order
-		for (int k = keylenght-1; k > 0; k--) {
+		for (int k = keylenght-1; k >= 0; k--) {
 			
 			// loop over Array
-			for (int i = 0; i < sequenceArray.size(); i++) {
-				char[] keyI = sequenceArray.get(i).getKey().toCharArray();	
+			for (int i = 0; i < sequenceArray.size(); i++) {			
 				
 				// loop over Array again to compare
 				for (int j = i+1; j < sequenceArray.size(); j++) {
+					char[] keyI = sequenceArray.get(i).getKey().toCharArray();
 					char[] keyJ = sequenceArray.get(j).getKey().toCharArray();
 					
 					if (keyI[k] > keyJ[k]) {
@@ -55,10 +57,11 @@ public class SequenceDataStruct extends dataStruct
 						sequenceArray.set(j, dnI);
 					}
 				}
-			}	
-		}	
+			}
+		}
 		return sequenceArray;
 	}	
+	
 	
 	@Override
 	public void add(String key, String value) 
@@ -74,15 +77,16 @@ public class SequenceDataStruct extends dataStruct
 			if( sequenceArray.get(i).getValue().equals("_") && sequenceArray.get(i).getKey().equals(key))
 			{
 				sequenceArray.get(i).setValue(value);
+				return;
 			}
-			return;
+			i++;
 		}
 		
 		//create new data node with desired key and value
 		//set previous successor pointer to null Node.
 		//add the new entry to the array list
 		DataNode newEntries = new DataNode(key,value);
-		newEntries.setSuccessorOwner(nullNode);
+		newEntries.setPreviousOwner(nullNode);
 		sequenceArray.add(newEntries);
 		
 	}
@@ -106,6 +110,7 @@ public class SequenceDataStruct extends dataStruct
 				
 				return;
 			}
+			i++;
 		}
 		
 		System.out.println("No value associated with that key at the moment");
@@ -123,13 +128,13 @@ public class SequenceDataStruct extends dataStruct
 			//if the data node entries at position i key value is equal to the searched key
 			if(sequenceArray.get(i).getKey().equals(key))
 			{
-				value.concat(sequenceArray.get(i).getValue());
+				value = new String(sequenceArray.get(i).getValue());
 				return value;
 			}
-		
+			i++;
 		}
 		
-		return "_";
+		return "*";
 	}
 	
 	
@@ -137,21 +142,28 @@ public class SequenceDataStruct extends dataStruct
 	public String prevKey(String key) 
 	{
 		int i = 0;
-		while( i < expectedEntries)
+		
+		
+		while( i < sequenceArray.size())
 		{
 			//if the data node entries at position i key value is equal to the searched key
 			if(sequenceArray.get(i).getKey().equals(key))
 			{
-				if(i == expectedEntries)
+				if(i == 0)
 				{
 					return "No Predecessor Key";
 				}
 				
+				else
+				{
+					return (sequenceArray.get(i-1).getKey());
+				}
+				
 			}
-		
+			i++;
 		}
 		
-		return (sequenceArray.get(i-1).getKey());
+		return "Key not Found";
 	}
 	
 	
@@ -159,31 +171,34 @@ public class SequenceDataStruct extends dataStruct
 	public String nextKey(String key) 
 	{
 		int i = 0;
-		while( i < expectedEntries)
+		while( i < sequenceArray.size())
 		{
 			//if the data node entries at position i key value is equal to the searched key
 			if(sequenceArray.get(i).getKey().equals(key))
 			{
-				if(i == 0)
+				if(i == sequenceArray.size()-1)
 				{
-					return "No Sucessor Key";
+					return "No Next Key";
 				}
 				
-				if(sequenceArray.get(i).getKey().equals("_"))
-					return "No Sucessor Key";
+				else
+				{
+					return sequenceArray.get(i+1).getKey();
+				}
 				
 			}
-		
+			
+			i++;
 		}
 		
-		return sequenceArray.get(i+1).getKey();
+		return "Key not Found";
 	}
 	
 	public Stack<String> previousCar(String key)
 	{
 		Stack<String> previousValues = new Stack<String>();
 		int i = 0;
-		while( i < expectedEntries)
+		while( i < sequenceArray.size())
 		{
 			//if the data node entries at position i key value is equal to the searched key
 			if(sequenceArray.get(i).getKey().equals(key))
@@ -192,15 +207,19 @@ public class SequenceDataStruct extends dataStruct
 				DataNode tempNode = sequenceArray.get(i);
 				previousValues.push(tempNode.getValue());
 				
-				while(!sequenceArray.get(i).getKey().equals("_"))
+				while(!tempNode.getPreviousOwner().getKey().equals("_"))
 				{
 					tempNode = tempNode.getPreviousOwner();
 					previousValues.push(tempNode.getValue());
 				}
+				
+				return previousValues;
+				
 			}
+			i++;
 		}
 		
-		
+		previousValues.push("Invalid key");
 		return previousValues;
 	}
 	

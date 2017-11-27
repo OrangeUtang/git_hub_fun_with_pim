@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Set;
@@ -33,10 +34,35 @@ public class HashDataStruct extends dataStruct
 	
 	
 	@Override
-	public void allKeys() 
+	public ArrayList<DataNode> allKeys() 
 	{
-		// TODO Auto-generated method stub
-
+		Enumeration<DataNode> en = hashStruct.elements();
+		ArrayList<DataNode> list = new ArrayList<DataNode>();
+		while (en.hasMoreElements()) {
+			list.add(en.nextElement());
+		}
+		
+		// loop over characters starting at last one for lexicographic order
+		for (int k = keylenght-1; k >= 0; k--) {
+			
+			// loop over Array
+			for (int i = 0; i < list.size(); i++) {			
+				
+				// loop over Array again to compare
+				for (int j = i+1; j < list.size(); j++) {
+					char[] keyI = list.get(i).getKey().toCharArray();
+					char[] keyJ = list.get(j).getKey().toCharArray();
+					
+					if (keyI[k] > keyJ[k]) {
+						DataNode dnI = list.get(i);
+						DataNode dnJ = list.get(j);
+						list.set(i, dnJ);
+						list.set(j, dnI);
+					}
+				}
+			}
+		}
+		return list;
 	}
 
 	@Override
@@ -49,13 +75,7 @@ public class HashDataStruct extends dataStruct
 			//if the value associated with the key is equal to '_'
 			if(hashStruct.get(key).getValue().equals("_"))
 			{
-				//create new data node, attach it to existing Node possessing the same key
-				//when its done replace that node with new Node
-				DataNode tempNode = new DataNode(key, value);
-				hashStruct.get(key).setSuccessorOwner(tempNode);
-				tempNode.setPreviousOwner(hashStruct.get(key));
-				hashStruct.remove(key);
-				hashStruct.put(key, tempNode);
+				hashStruct.get(key).setValue(value);
 			}
 			
 			else
@@ -96,13 +116,8 @@ public class HashDataStruct extends dataStruct
 				DataNode availableNode = new DataNode(key, "_");
 				hashStruct.get(key).setSuccessorOwner(availableNode);
 				availableNode.setPreviousOwner(hashStruct.get(key));
-				hashStruct.remove(key);
 				hashStruct.put(key,availableNode);
 			}
-			
-			
-			
-			
 		}
 
 	}
@@ -110,55 +125,78 @@ public class HashDataStruct extends dataStruct
 	@Override 
 	public String getValues(String key) 
 	{
-		if(hashStruct.containsKey(key) && !hashStruct.get(key).getValue().equals("_"))	
+		if(hashStruct.containsKey(key))
+		{
 			return hashStruct.get(key).getValue();
+		}
 		
-		return "_";
+		return "*";
 	}
 
 	@Override
 	public String nextKey(String key) 
 	{
-		Enumeration<DataNode> elementEnum = hashStruct.elements();
-		
-		//while
-		//DataNode temp = elementEnum.
-		
 		Set<String> hashKeySet = hashStruct.keySet();
-		
 		boolean found = false;
+		
+		//iterate through hash table
 		for(String value : hashKeySet)
 		{
 			
+			//if found i
 			if(found)
 			{
-				return hashStruct.get(value).getValue();
+				return hashStruct.get(value).getKey();
 			}
 			
 			
-            if(hashStruct.get(value).equals(key))
+            if(hashStruct.get(value).getKey().equals(key))
             {
             	found = true;
             }
             
         }
-		
-		return "Not found /n";
-		
+		return "Not found";
+
 	}
 
 	@Override
 	public String prevKey(String key) 
 	{
-		// TODO Auto-generated method stub
-		return null;
+		
+		Set<String> hashKeySet = hashStruct.keySet();
+		DataNode tempNode = nullNode;
+		int counter = 0;
+		
+		for(String value : hashKeySet)
+		{		
+			
+					
+            if(hashStruct.get(value).getKey().equals(key) && counter != 0)
+            {
+            	return tempNode.getKey();
+            }
+			
+			tempNode = hashStruct.get(value);
+            
+			counter++;
+        }
+		return "Not found";
 	}
 
 	@Override
 	public Stack<String> previousCar(String key) 
 	{
 		
-		return null;
+		Stack<String> previousOwnerStack = new Stack<String>();
+		DataNode curdn = hashStruct.get(key);
+		
+		while(!curdn.getKey().equals("_")) 
+		{
+			previousOwnerStack.push(curdn.getValue());
+			curdn = curdn.getPreviousOwner();
+		}		
+		return previousOwnerStack;
 	}
 
 }

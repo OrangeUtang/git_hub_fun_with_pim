@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Stack;
 
 public class SmartAR 
 {
@@ -97,7 +99,7 @@ public class SmartAR
 			}
 			
 			//verifying if Key is in data Structure.
-			if(dataStructure.getValues(genKey).equals("_") && !previouslyCreated)
+			if((dataStructure.getValues(genKey).equals("_") || dataStructure.getValues(genKey).equals("*")) && !previouslyCreated)
 			{
 				generatedKey[i] = genKey;
 				successfulGeneration++;
@@ -116,9 +118,9 @@ public class SmartAR
 	
 	
 	
-	public void allKeys()
+	public ArrayList<DataNode> allKeys()
 	{
-		dataStructure.allKeys();
+		return dataStructure.allKeys();
 	}
 	
 	
@@ -131,13 +133,23 @@ public class SmartAR
 			return;
 		}
 		
-		if(dataCount > expectedDataCount)
+		if(dataCount >= expectedDataCount)
 		{
 			System.out.println("dataCount has exceded expected data count, will have to change data structure");
 			return;
 		}
+		
+		if(dataStructure.getValues(key).equals("*"))
+		{
 		dataStructure.add(key, value);
 		dataCount++;
+		}
+		
+		else
+		{
+			dataStructure.add(key, value);
+		}
+		
 	}
 	
 	
@@ -195,6 +207,12 @@ public class SmartAR
 		return dataStructure.prevKey(key);
 		
 	}
+	
+	public Stack<String> previousCar(String key) 
+	{
+		return dataStructure.previousCar(key);
+	}
+	
 
 	
 	

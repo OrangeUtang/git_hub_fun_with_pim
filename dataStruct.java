@@ -16,7 +16,7 @@ public abstract class dataStruct
 		keylength = x;
 	} 
 	
-	public abstract ArrayList<?> allKeys();
+	public abstract ArrayList<DataNode> allKeys();
 	
 	public abstract void add(String key, String value);
 	
